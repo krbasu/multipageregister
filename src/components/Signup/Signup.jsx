@@ -33,6 +33,11 @@ const Signup = () => {
     third: { color: "black" },
     fourth: { color: "black" },
   });
+  const [storename, setstorename] = useState({
+    fname: "",
+    dname: "",
+    wname: "",
+  });
   useEffect(() => {
     switch (step) {
       case 1:
@@ -71,6 +76,7 @@ const Signup = () => {
           third: { color: "black" },
           fourth: { color: "black" },
         });
+        localStorage.setItem("name", storename.fname);
         break;
       case 3:
         setbcolor({
@@ -99,6 +105,7 @@ const Signup = () => {
           third: { color: "white" },
           fourth: { color: "black" },
         });
+        localStorage.setItem("workname", storename.wname);
         break;
       case 4:
         setbcolor({
@@ -138,6 +145,11 @@ const Signup = () => {
     }
   }, [step]);
 
+  const clickname = (e) => {
+    const value = e.target.value;
+    setstorename({ ...storename, [e.target.name]: value });
+  };
+
   const fcw = () => {
     setstep(step + 1);
   };
@@ -173,11 +185,25 @@ const Signup = () => {
           <div className='s-inputfield'>
             <div>
               <label htmlFor='fname'>Full Name</label>
-              <input type='text' name='fname' id='' placeholder='Steve Jobs' />
+              <input
+                onChange={clickname}
+                type='text'
+                name='fname'
+                id=''
+                value={storename.fname}
+                placeholder='Steve Jobs'
+              />
             </div>
             <div>
               <label htmlFor='fname'>Display Name</label>
-              <input type='text' name='dname' id='' placeholder='Steve' />
+              <input
+                onChange={clickname}
+                value={storename.dname}
+                type='text'
+                name='dname'
+                id=''
+                placeholder='Steve'
+              />
             </div>
           </div>
           <div className='s-workspacebtn'>
@@ -192,7 +218,14 @@ const Signup = () => {
           <div className='s-inputfield'>
             <div>
               <label htmlFor='fname'>Workspace Name</label>
-              <input type='text' name='wsname' id='' placeholder='Eden' />
+              <input
+                onChange={clickname}
+                value={storename.wname}
+                type='text'
+                name='wname'
+                id=''
+                placeholder='Eden'
+              />
             </div>
             <div>
               <label htmlFor='fname'>Workspace URL(optional)</label>
@@ -249,8 +282,11 @@ const Signup = () => {
             <TiTick color='white' />
           </div>
           <div className='s-welcome'>
-            <h3>Congratulations,Eren!</h3>
-            <h5>You have completed the onboarding,you can start using Eden!</h5>
+            <h3>Congratulations,{localStorage.getItem("name")}!</h3>
+            <h5>
+              You have completed the onboarding,you can start using{" "}
+              {localStorage.getItem("workname")}!
+            </h5>
           </div>
 
           <div className='s-workspacebtn'>
